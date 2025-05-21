@@ -1,21 +1,23 @@
+/*
+
 1) Open a terminal and run the command:
 
-lsblk
+# lsblk
 
-    🧠 What is lsblk?
+    What is lsblk?
     The lsblk command displays information about all available block devices (disks), such as their size and mount points, in a tree format.
 
 2) Installing Sudo and Configuring User and Groups
 
-Switch to Root User and Install Sudo Begin by switching to the root user to install sudo. Enter su - in the bash prompt and provide the root password. Additionally, install VIM to configure some files. 
+Switch to Root User and Install Sudo Begin by switching to the root user to install sudo. 
+Enter su - in the bash prompt and provide the root password. Additionally, install VIM to configure some files. 
 
 2.1) Installing sudo
 
 2.1.1) Switch to root and its environment via su -.
 
-$ su -
+# su -
 Password:
-#
 
 2.1.2) Install sudo via apt install sudo.
 
@@ -38,6 +40,7 @@ Password:
 2.1.6) Verify that sudo was installed successfully:
 
 # sudo -V
+
 
 2.2) Configuring User and Groups
 
@@ -87,7 +90,7 @@ Press Y to confirm the installation when prompted.
 
 # sudo service ssh status
 
-    💡 This should return a status showing that the SSH service is active and running.
+This should return a status showing that the SSH service is active and running.
 
 3.5) Edit SSH Configuration to customize your SSH settings:
 
@@ -136,9 +139,9 @@ Update the following line:
     Go to Adapter 1
     Change the Attached to setting to Bridged Adapter
 
-    💡 This will allow the VM to use the same network as the host machine.
+This will allow the VM to use the same network as the host machine.
 
-4.3) sudo reboot to reboot the VM
+4.3) # sudo reboot to reboot the VM
 
 4.4) Get VirtualMachine IP (in the VM)
 
@@ -152,20 +155,54 @@ Update the following line:
 
 # exit
 
+OR
+
+# logout
+
 // fiquei aqui
 
-5) Configuring sudo policies and log
+5) Configuring sudo policies and log (User privileges)
 
-5.1) Create the following file
+5.1) Creating the sudo.log
 
-# touch /etc/sudoers.d/sudo_config
+    cd ~/../
+    cd var/log
+    mkdir sudo
+    cd sudo
+    touch sudo.log
+    cd ~/../
 
 5.2) Return to the terminal outside the VM.
+
 Connect again via SSH
 
 # ssh <username>@<VirtualMachine_IP> -p 4242
 
+5.3) Switch to user ROOT
 
+# su
+
+5.4) Configuring the Sudoers Group
+
+To open to Sudoers file.
+
+# sudo visudo
+
+Edit your sudoers file by adding the rest of the defaults so it should read like this:
+
+Defaults  secure_path
+Defaults  badpass_message="Wrong Password!"
+Defaults  passwd_tries=3
+Defaults  iolog_dir="/var/log/sudo"
+Defaults  logfile="/var/log/sudo/sudo.logs"
+Defaults  log_input
+Defaults  log_output
+Defaults  requiretty
+
+go to the line where there is root  ALL(ALL:ALL) ALL
+put bellow it <username>  ALL(ALL:ALL) ALL
+
+5.5) Than type exit > exit to close connection
 
 4) Installing & Configuring UFW (este passo j'a foi feito)
 
