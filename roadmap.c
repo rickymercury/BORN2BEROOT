@@ -254,8 +254,9 @@ Note: To close the connection:  # exit     or     # logout
 
 5.1) Create a directory for the sudo log file:
 
+# su
 # cd ~/../
-# cd var/log
+# cd /var/log
 # mkdir sudo
 
 NOTE: Till here, its the same as creating ->  sudo mkdir /var/log/sudo
@@ -341,14 +342,7 @@ NOTE: We can verify if the pam package was installed via: # dpkg -l | grep libpa
 
 On the per-package modules section after: "25 password    requisite   pam_pwquality.so retry=3" add:
 
-minlen=10
-ucredit=-1
-dcredit=-1
-lcredit=-1
-maxrepeat=3
-reject_username
-difok=7
-enforce_for_root
+minlen=10 ucredit=-1 dcredit=-1 lcredit=-1 maxrepeat=3 reject_username difok=7 enforce_for_root
 
 Save and exit the file. 
 
